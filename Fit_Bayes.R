@@ -92,5 +92,3 @@ for (w in 1:98) {
     points(t,y)
     
 }
-
-###Prueba
