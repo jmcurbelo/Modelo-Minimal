@@ -28,7 +28,7 @@ for (w in 1:98) {
     Sys.sleep(0.00000000000001)
     
     # Reading the insulin's data
-    ins<-read.csv(paste("./Data/Ins/ins",w,sep = ""))
+    ins<-read.csv(paste("./Ins/ins",w,sep = ""))
     ins<-ins[,2]
     
     # Reading the glucose's data
@@ -158,4 +158,4 @@ for (w in 1:98) {
 close(pb)
 
 write.csv(estimaciones,
-          file = "./Data/Estimations/all_Subjects_Bayes")
+          file = "./Estimations/all_Subjects_Bayes")
