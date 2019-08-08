@@ -1,7 +1,5 @@
 library(foreign)
 library(ggplot2)
-# # leyendo la base de datos
-# setwd("/Users/jose/Documents/MAESTRIA/INVESTIGACION/NIÑOS/DATOS")
 
 datos<- read.spss("./Data/BASE.SAV",use.value.labels=TRUE, max.value.labels=TRUE,
                   to.data.frame=TRUE)
