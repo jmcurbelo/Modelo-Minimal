@@ -191,10 +191,10 @@ for (w in 1:98) {
     # Graficando las soluciones
     t<- seq(1,120)
     
-    estimaciones<- data.frame(time=t, solucion=b, y=y)
-    
-    g<- ggplot(estimaciones, aes(time, solucion))+geom_line(col="blue")+geom_point(aes(time, y), col="red", cex=2)+labs(x="Time (min)", y="Glucose (mg/dl)")+labs(title = paste("Suject",w,sep = " "))
-    print(g)
+    # estimaciones<- data.frame(time=t, solucion=b, y=y)
+    # 
+    # g<- ggplot(estimaciones, aes(time, solucion))+geom_line(col="blue")+geom_point(aes(time, y), col="red", cex=2)+labs(x="Time (min)", y="Glucose (mg/dl)")+labs(title = paste("Suject",w,sep = " "))
+    # print(g)
     
     
 }
