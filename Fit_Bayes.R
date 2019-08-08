@@ -1,6 +1,7 @@
 # Reading Data base
 library(foreign)
 library(tools)
+library(ggplot2)
 
 datos<- read.spss("./Data/BASE.SAV",use.value.labels=TRUE, max.value.labels=TRUE,
                   to.data.frame=TRUE)
@@ -25,7 +26,7 @@ for (w in 1:98) {
     
     # Reading the insulin's data
     
-    ins<-read.csv(paste("./Data/Ins/ins",w,sep = ""))
+    ins<-read.csv(paste("./Ins/ins",w,sep = ""))
     ins<-ins[,2]
     
     y<-rep(NA, times=120)
@@ -91,10 +92,5 @@ for (w in 1:98) {
     
     g<- ggplot(estimaciones, aes(time, solucion))+geom_line(col="blue")+geom_point(aes(time, y), col="red", cex=2)+labs(x="Time (min)", y="Glucose (mg/dl)")+labs(title = paste("Suject",w,sep = " "))
     print(g)
-    
-    
-    # plot(t,b,type = "l", ylim =c(0,300),main =paste("Ajuste Sujeto",w,"Bayes",sep = " "),
-    #      xlab = "Tiempo", ylab = "Glucosa")
-    # points(t,y)
     
 }
