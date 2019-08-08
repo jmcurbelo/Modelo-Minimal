@@ -15,4 +15,5 @@ https://github.com/jmcurbelo/Modelo-Minimal.git
 - **Data**: Como su nombre lo indica contiene la base de datos de los niños.
 - **Ins**: Contiene los archivos de interpolaciones de todos los sujetos creados con el Script Interpolate.
 - **Estimations**: Contiene el archivo con las estimaciones bayesianas de todos los sujetos.
+- **PNG**: Contiene las imágenes de los ajustes de todos los sujetos con las estimaciones bayesianas.
 
