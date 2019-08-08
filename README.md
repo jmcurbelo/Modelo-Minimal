@@ -3,3 +3,7 @@ En este archivo Readme les estaré adjuntando información para que puedan acced
 
 # Link para clonar el repositorio
 https://github.com/jmcurbelo/Modelo-Minimal.git
+
+# Archivos que se encuentran en el repositorio
+- a
+- b 
