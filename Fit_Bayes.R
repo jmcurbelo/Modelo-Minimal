@@ -14,7 +14,7 @@ glu_120<- datos$Gluc_120
 
 
 # Reading the Bayes's estimations
-est_Bayes<-read.csv("./Data/Estimations/all_Subjects_Bayes")
+est_Bayes<-read.csv("./Estimations/all_Subjects_Bayes")
 est_Bayes<-est_Bayes[,2:8]
 #"G0","Si","p2","k1","k2","k3","k4"
 
@@ -87,9 +87,14 @@ for (w in 1:98) {
     # Ploting the solutions
     t<- seq(1,120)
     
-    plot(t,b,type = "l", ylim =c(0,300),main =paste("Ajuste Sujeto",w,"Bayes",sep = " "),
-         xlab = "Tiempo", ylab = "Glucosa")
-    points(t,y)
+    estimaciones<- data.frame(time=t, solucion=b, y=y)
+    
+    g<- ggplot(estimaciones, aes(time, solucion))+geom_line(col="blue")+geom_point(aes(time, y), col="red", cex=2)+labs(x="Time (min)", y="Glucose (mg/dl)")+labs(title = paste("Suject",w,sep = " "))
+    print(g)
+    
+    
+    # plot(t,b,type = "l", ylim =c(0,300),main =paste("Ajuste Sujeto",w,"Bayes",sep = " "),
+    #      xlab = "Tiempo", ylab = "Glucosa")
+    # points(t,y)
     
 }
-#
