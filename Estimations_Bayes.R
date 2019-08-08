@@ -1,3 +1,5 @@
+set.seed(12345)
+
 # Reading Data base
 library(foreign)
 library(tools)
