@@ -1,8 +1,9 @@
 library(foreign)
-# leyendo la base de datos
-setwd("/Users/jose/Documents/MAESTRIA/INVESTIGACION/NIÑOS/DATOS")
+library(ggplot2)
+# # leyendo la base de datos
+# setwd("/Users/jose/Documents/MAESTRIA/INVESTIGACION/NIÑOS/DATOS")
 
-datos<- read.spss("BASE.SAV",use.value.labels=TRUE, max.value.labels=TRUE,
+datos<- read.spss("./Data/BASE.SAV",use.value.labels=TRUE, max.value.labels=TRUE,
                   to.data.frame=TRUE)
 
 # creando los vectores con las obs de glucosa
@@ -12,13 +13,8 @@ glu_60<- datos$Gluc_60
 glu_90<- datos$Gluc_90
 glu_120<- datos$Gluc_120
 
-
-
-# direccion de los datos de insulina interpolados y estimaciones
-setwd("/Users/jose/Documents/MAESTRIA/INVESTIGACION/NIÑOS/DATOS/Interpolaciones/Todas/")
-
 # Leyendo las estimaciones de Bayes
-est_Bayes<-read.csv("all_Subjects_Bayes")
+est_Bayes<-read.csv("./Estimations/all_Subjects_Bayes")
 est_Bayes<-est_Bayes[,2:8]
 #"G0","Si","p2","k1","k2","k3","k4"
 
@@ -29,7 +25,7 @@ for (w in 1:98) {
     
     # leyendo los datos de insulina
     
-    ins<-read.csv(paste("ins",w,sep = ""))
+    ins<-read.csv(paste("./Ins/ins",w,sep = ""))
     ins<-ins[,2]
     
     y<-rep(NA, times=120)
@@ -100,8 +96,12 @@ for (w in 1:98) {
     
     estimaciones<- data.frame(time=t, solucion=b, y=y)
     
+    png(filename = paste("./PNG/Subject",w, sep = ""),
+        width = 480, height = 480, units = "px")
+    
     g<- ggplot(estimaciones, aes(time, solucion))+geom_line(col="blue")+geom_point(aes(time, y), col="red", cex=2)+labs(x="Time (min)", y="Glucose (mg/dl)")+labs(title = paste("Suject",w,sep = " "))
     print(g)
     
+    dev.off()
     
 }
