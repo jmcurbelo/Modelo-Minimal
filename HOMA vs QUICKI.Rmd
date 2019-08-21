@@ -1,0 +1,102 @@
+---
+title: "HOMA vs QUICKI with average of the measurements of glucose and insulin"
+author: "José Miguel Moya"
+date: "21/8/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+# Resumen
+Traté con las recomendaciones que me hizo en el email. Tomé las fórmulas del artículo y las implementé con los promedios de las mediciones de glucosa e insulina.  Aquí le dejo los resultados obtenidos.
+
+## Leemos los datos
+```{r}
+est <- read.csv("./Estimations/all_Subjects_Bayes")
+```
+
+## Asignando los nombres de las columnas
+
+Asignamos los nombres de los parámetros a las columnas del dataframe después de haberlo convertido a "tabla dataframe" (esto es para poder trabajar mejor con el dataframe).
+
+```{r, message=FALSE}
+library(dplyr)
+
+est <- tbl_df(est)
+
+est <- est %>%
+    select(V1:V7)
+
+names(est) <- c("G0","Si","p2","k1","k2","k3","k4")
+```
+
+## Leemos los datos de glucosa e insulina
+
+```{r, message=FALSE}
+library(foreign)
+data <- read.spss("./Data/BASE.SAV",use.value.labels=TRUE, max.value.labels=TRUE,
+                  to.data.frame=TRUE) 
+library(dplyr)
+
+data <- tbl_df(data)
+```
+
+## Limpiando un poco los datos para trabajar con lo que nos interesa
+
+```{r}
+glucose <- data %>%
+    select(Gluc_basal:Gluc_120)
+
+insuline <- data %>%
+    select(Insulina_basal:Insulina_120)
+
+glucoseMean <- apply(glucose, 1, mean)
+
+insulineMean <- apply(insuline, 1, mean)
+
+```
+
+# HOMA
+
+```{r}
+# SiHOMA = 22.5/(i*g)
+
+SiHOMA = 22.5/(insulineMean*glucoseMean)
+
+est$SiHOMA <- SiHOMA
+
+Si.vs.SiHOMA <- est %>%
+    select(Si, SiHOMA) %>%
+    print
+```
+
+# QUICKI
+
+```{r}
+# SiQUICKI = 1/(log(I0) +  log(G0))
+
+SiQUICKI <- 1/(log(insulineMean) +  log(glucoseMean))
+
+est$SiQUICKI <- SiQUICKI
+
+Si.vs.SiQUICKI <- est %>%
+    select(Si, SiQUICKI) %>%
+    print
+
+```
+
+
+# Comparando las estimaciones de Si por Bayes vs HOMA y QUICKI
+
+Aquí agregué una columna con el valor absoluto de la diferencia entre el Si obtenido por Bayes y el obtenido por cada uno de los métodos.
+
+```{r}
+comparision.Si <- est %>%
+    select(Si, SiHOMA, SiQUICKI) %>%
+    mutate(difference_Si.vs.SiHOMA = abs(Si-SiHOMA), 
+           difference_Si.vs.SiQUICKI = abs(Si-SiQUICKI)) %>%
+    print
+```
+
+# Conclusiones Parciales
+
+Observando los resultados me parece que el HOMA se acerca bastante a lo que obtuvimos por Bayes mientras QUICKI me parece se aleja un poco más. Habrá que ver si lleva algún otro tipo de análisis. 
