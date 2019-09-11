@@ -31,4 +31,7 @@ melted_corMat <- melt(corMat)
 library(ggplot2)
 
 ggplot(data = melted_corMat, aes(x=Var1, y=Var2, fill=value)) + 
-    geom_tile()
+    geom_tile() +
+    labs(x="", y="") +
+    ggtitle("Correlation heatmap")
+    
